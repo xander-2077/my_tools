@@ -1,0 +1,29 @@
+#!/usr/bin/python3
+import shutil
+import os
+import argparse
+
+def get_args():
+    parser = argparse.ArgumentParser("select from: lab yzhx nk")
+    parser.add_argument("--cfg", type=str, default="lab")
+    args = parser.parse_args()
+    return args
+
+if __name__ == '__main__':
+    args = get_args()
+
+    os.chdir("/home/xander/clash")
+    if os.path.exists("config.yaml"):
+        os.unlink("config.yaml")
+
+    if args.cfg == "lab":
+        shutil.copy("/home/xander/clash/config/config_lab.yaml", "/home/xander/clash/config.yaml")
+    elif args.cfg == "yzhx":
+        shutil.copy("/home/xander/clash/config/config_yzhx.yaml", "/home/xander/clash/config.yaml")
+    elif args.cfg == "nk":
+        shutil.copy("/home/xander/clash/config/config_nk.yaml", "/home/xander/clash/config.yaml")
+
+    cmd = 'systemctl --user stop clash.service'
+    os.system(cmd)
+    cmd = 'systemctl --user start clash.service'
+    os.system(cmd)
