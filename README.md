@@ -1,2 +1,2 @@
-# scipts
+# Scipts
 Some useful tools
